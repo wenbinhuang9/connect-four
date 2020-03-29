@@ -1,6 +1,4 @@
 # Connect Four
 
-An implementation of Connect Four in Javascript.
-
-**Play: [http://bryanbraun.github.io/connect-four](http://bryanbraun.github.io/connect-four)**
+A AI implementation of connect-4 game 
 

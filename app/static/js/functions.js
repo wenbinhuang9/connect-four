@@ -2,12 +2,25 @@
 
 Game.do = (function() {
   /**
+  **/
+  function httpGet(theUrl){
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, true); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+   }
+
+  /**
    * A function for adding a disc to our Connect Four board state.
    *
    * @param number x_pos The x-position of the location chosen.
    * @param number y_pos The y-position of the location chosen.
    */
   function addDiscToBoard(x_pos, y_pos) {
+    // todo tell the backend about adding the piece to board
+    var url = "http://127.0.0.1:5000/play?x_pos=1&y_pos=1"
+    var response = httpGet(url)
+
     Game.board[y_pos][x_pos] = Game.currentPlayer;
   }
 
