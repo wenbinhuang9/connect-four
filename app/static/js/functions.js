@@ -17,11 +17,11 @@ Game.do = (function() {
    * @param number y_pos The y-position of the location chosen.
    */
   function addDiscToBoard(x_pos, y_pos) {
-    // todo tell the backend about adding the piece to board
-    var url = "http://127.0.0.1:5000/play?x_pos=1&y_pos=1"
-    var response = httpGet(url)
+
 
     Game.board[y_pos][x_pos] = Game.currentPlayer;
+
+
   }
 
   /**

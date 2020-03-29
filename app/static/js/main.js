@@ -10,7 +10,7 @@
   var playAgainBtnEl = document.querySelector('#play-again-btn');
   var gameBoardEl = document.querySelector('#board');
 
-  playAgainBtnEl.addEventListener('click', () => location.reload());
+  playAgainBtnEl.addEventListener('click', () => location.reload(true));
   gameBoardEl.addEventListener('click', placeGamePiece);
   currentPlayerNameEl.addEventListener("keydown", Game.do.handleNameChange);
   otherPlayerNameEl.addEventListener("keydown", Game.do.handleNameChange);
@@ -39,6 +39,8 @@
     Game.do.addDiscToBoard(x_pos, y_pos);
     Game.do.printBoard();
 
+
+
     // Check to see if we have a winner.
     if (Game.check.isVerticalWin() || Game.check.isHorizontalWin() || Game.check.isDiagonalWin()) {
       gameBoardEl.removeEventListener('click', placeGamePiece);
@@ -57,6 +59,29 @@
 
     // Change player.
     Game.do.changePlayer();
+
+    url = "http://127.0.0.1:5000/play"
+    var xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open( "POST", url, true ); // false for synchronous request
+    xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    var data = 'x=' + x_pos + "&y=" + y_pos;
+
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4) {
+            if (xmlHttp.status == 200) {
+                data = xmlHttp.responseText;
+                var jsonObj = JSON.parse(data);
+                var x_pos = jsonObj.row;
+                var y_pos = jsonObj.col;
+                console.log("" + x_pos + "_" + y_pos)
+                Game.do.addDiscToBoard(x_pos, y_pos);
+                Game.do.printBoard();
+                Game.do.changePlayer();
+            }
+        }
+    }
+    xmlHttp.send(data);
   };
 
 })();

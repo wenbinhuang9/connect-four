@@ -2,14 +2,22 @@ player1 = 1
 player2 = 2
 empty = 0
 
+
 maxdepth = 3
 
+## todo adding another strategy, if the opposit will win, prevent it .
 
 def init(row, col):
     board = [[0 for j in range(col)] for i in range(row)]
 
     return board
 
+
+def get_total_baord():
+    return total_board
+
+def set_total_baord(board):
+    total_board = board
 def start(player, row, col):
     board = init(row, col)
 
@@ -27,7 +35,8 @@ def play(board, player):
 
     fillBoard(board, r, c, player)
     print_board(board)
-    print("")
+
+    return (r, c)
 
 def nextPlayer(player):
     return  3 - player
@@ -248,6 +257,10 @@ def get_line_score(one_line, player):
     if last_empty == None:
         return 0
 
+    if last_empty + 4 < len(one_line) and player == one_line[last_empty + 1] == one_line[last_empty + 2] \
+        == one_line[last_empty + 3] == one_line[last_empty + 4]:
+        return 1000
+
     if last_empty + 3 < len(one_line) and player == one_line[last_empty + 1] == one_line[last_empty + 2] \
         == one_line[last_empty + 3]:
         return 100
@@ -263,6 +276,8 @@ def print_board(board):
 
     for row in row_list:
         print(row)
+
+total_board = init(6, 7)
 
 if __name__ == "__main__":
     start(player1, 5, 5)

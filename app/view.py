@@ -1,8 +1,8 @@
 
 import sys
-
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, helpers
-
+import  json
+from flask import Flask, request, render_template, helpers
+from connect_four import fillBoard, player2, init, play, player1
 DATABASE = '/tmp/flaskr.db'
 ENV = 'development'
 DEBUG = True
@@ -16,28 +16,48 @@ print(type(__name__))
 print(helpers.get_root_path(__name__))
 print(sys.modules.get(__name__))
 
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 
 
+class connect_4():
+
+    def __init__(self):
+        self.board = init(6, 7)
+
+    def player2(self):
+        return play(self.board, player2)
+
+    def fillBoard(self, x, y, player):
+        fillBoard(self.board, x, y, player)
+
+    def reset(self):
+        self.board = init(6, 7)
+
+
+connectFour = connect_4()
+
 @app.route('/')
 def show_entries():
+    connectFour.reset()
     return render_template('index.html')
 
 
-## todo add parameters here
-@app.route('/play')
-def play():
-    print(request.args)
-    x_pos = request.args.get('x_pos')
+@app.route('/play', methods=["POST", "GET"])
+def play__():
 
-    y_pos = request.args.get('y_pos')
+    print(request.form)
+    ## looks strane here
+    x_pos = int(request.form["y"])
+    y_pos = int(request.form["x"])
 
-    print(request.url)
+    print("x={}|y={}".format(x_pos, y_pos))
 
-    print(x_pos , y_pos)
-    return "helloworld"
+    connectFour.fillBoard(x_pos, y_pos, player1)
+    r, c = connectFour.player2()
+    d = {"row":c, "col":r}
+    print(d)
+    return json.dumps(d)
 
 
 if __name__ == '__main__':
