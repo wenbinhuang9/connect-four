@@ -1,4 +1,4 @@
 # Connect Four
 
-A AI implementation of connect-4 game 
+An AI game developed on the web system based on Flask, Javascript, HTMl, CSS. And the game is implemented by Min-max algorithm.
 
