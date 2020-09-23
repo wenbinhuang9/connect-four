@@ -1,20 +1,15 @@
 player1 = 1
 player2 = 2
 empty = 0
-
-
 maxdepth = 3
 
 ## todo adding another strategy, if the opposit will win, prevent it .
-
 def init(row, col):
     board = [[0 for j in range(col)] for i in range(row)]
 
     return board
 
 
-def get_total_baord():
-    return total_board
 
 def set_total_baord(board):
     total_board = board
@@ -28,6 +23,10 @@ def start(player, row, col):
         curPlayer = 3 - curPlayer
 
 def play(board, player):
+    data = find_dead_step(board, player)
+    if data != None: ## have a dead step to fail, prevent it
+        return data
+
     if player == player1:
         r, c= maxx(board, maxdepth, player)
     if player == player2:
@@ -277,7 +276,20 @@ def print_board(board):
     for row in row_list:
         print(row)
 
-total_board = init(6, 7)
 
+## detect dead step to cause the current player failure
+def find_dead_step(board, player):
+    oppsite_palyer = nextPlayer(player)
+
+    for c in getAvailCols(board):
+        r = getPlayRow(board, c)
+        fillBoard(board, r, c, oppsite_palyer)
+        if game_over(board):
+            unfillBoard(board, r, c)
+            return (r, c)
+
+        unfillBoard(board, r, c)
+
+    return None
 if __name__ == "__main__":
     start(player1, 5, 5)

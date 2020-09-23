@@ -39,8 +39,6 @@
     Game.do.addDiscToBoard(x_pos, y_pos);
     Game.do.printBoard();
 
-
-
     // Check to see if we have a winner.
     if (Game.check.isVerticalWin() || Game.check.isHorizontalWin() || Game.check.isDiagonalWin()) {
       gameBoardEl.removeEventListener('click', placeGamePiece);
@@ -65,6 +63,7 @@
 
     xmlHttp.open( "POST", url, true ); // false for synchronous request
     xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //todo solve the bug here!!! solve it!!!, why x and y is reversed???
     var data = 'x=' + x_pos + "&y=" + y_pos;
 
     xmlHttp.onreadystatechange = function() {
