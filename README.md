@@ -11,5 +11,5 @@ python view.py
 
 the fron end looks like this 
 
-![](./image/2.png)
+![](./image/Screen%20Shot%202020-09-23%20at%2011.18.00%20AM.png)
 
